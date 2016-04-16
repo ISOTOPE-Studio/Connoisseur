@@ -10,3 +10,7 @@ commands:
     description: Connoisseur command
     usage: /<command> - Get Information
     aliases: conno
+  ConnoisseurAdmin:
+    description: Connoisseur Admin command
+    usage: /<command> - Get Information
+    aliases: cadmin
