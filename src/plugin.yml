@@ -1,0 +1,12 @@
+name: Connoisseur
+main: cc.isotopestudio.Connoisseur.Connoisseur
+
+author: Mars
+description: Connoisseur
+website: http://isotopestudio.cc
+version: 1.0.0
+commands:
+  Connoisseur:
+    description: Connoisseur command
+    usage: /<command> - Get Information
+    aliases: conno
