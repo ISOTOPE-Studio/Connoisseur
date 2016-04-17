@@ -2,6 +2,8 @@ package cc.isotopestudio.Connoisseur.names;
 
 import java.util.HashMap;
 
+import org.bukkit.Material;
+
 public enum WeaponType {
 	CRITICAL("±©»÷", 0.08, 0.12, 0.15, 0.17, 0.22, 0.25, 0.30, "Ë«±¶±©»÷"),
 
@@ -44,4 +46,15 @@ public enum WeaponType {
 		return attriLevMap.get(type);
 	}
 
+	public static boolean isWeapon(Material item) {
+		if (item.equals(Material.DIAMOND_SWORD) || item.equals(Material.DIAMOND_AXE)
+
+				|| item.equals(Material.GOLD_SWORD) || item.equals(Material.GOLD_AXE)
+
+				|| item.equals(Material.IRON_SWORD) || item.equals(Material.IRON_AXE)
+
+				|| item.equals(Material.WOOD_SWORD) || item.equals(Material.WOOD_AXE))
+			return true;
+		return false;
+	}
 }

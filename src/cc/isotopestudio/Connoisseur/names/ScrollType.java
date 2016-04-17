@@ -9,11 +9,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import cc.isotopestudio.Connoisseur.utli.S;
 
 public enum ScrollType {
-	A("»ìãç¼ø¶¨¾í", Material.PAPER, LevelType.G, LevelType.D),
+	A("»ìãç¼ø¶¨¾í", Material.PAPER, LevelType.E, LevelType.A),
 
 	B("Áé»ê¼ø¶¨¾í", Material.PAPER, LevelType.F, LevelType.C),
 
-	C("×°±¸¼ø¶¨¾í", Material.PAPER, LevelType.E, LevelType.A),
+	C("×°±¸¼ø¶¨¾í", Material.PAPER, LevelType.G, LevelType.D),
 
 	X("ÖØÖý¾íÖá", Material.BOOK);
 
@@ -51,15 +51,18 @@ public enum ScrollType {
 	}
 
 	public String toString() {
-		if (this.equals(ScrollType.A))
+		switch (name()) {
+		case ("A"):
 			return S.toBoldPurple(name);
-		if (this.equals(ScrollType.B))
+		case ("B"):
 			return S.toBoldDarkAqua(name);
-		if (this.equals(ScrollType.C))
+		case ("C"):
 			return S.toBoldDarkGreen(name);
-		if (this.equals(ScrollType.X))
+		case ("X"):
 			return S.toBoldGreen(name);
-		return null;
+		default:
+			return null;
+		}
 	}
 
 	public ItemStack getItem() {

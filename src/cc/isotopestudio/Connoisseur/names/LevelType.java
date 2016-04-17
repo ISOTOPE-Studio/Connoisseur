@@ -44,7 +44,7 @@ public enum LevelType {
 		return null;
 	}
 
-	public int getMaxAttr() {
+	public int getMaxAttrNum() {
 		return max;
 	}
 
