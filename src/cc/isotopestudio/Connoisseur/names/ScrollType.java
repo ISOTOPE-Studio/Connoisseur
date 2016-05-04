@@ -69,6 +69,14 @@ public enum ScrollType {
 		return item;
 	}
 
+	public LevelType getMin() {
+		return min;
+	}
+
+	public LevelType getMax() {
+		return max;
+	}
+
 	public LevelType getRandomLevelType() {
 		LevelType type = LevelType.getRandom();
 		while (!(type.getDiff(min) >= 0 && type.getDiff(max) <= 0)) {
@@ -78,16 +86,31 @@ public enum ScrollType {
 	}
 
 	public static ScrollType getType(ItemStack item) {
-		ItemMeta meta = item.getItemMeta();
-		for (ScrollType type : ScrollType.values()) {
-			try {
+		try {
+			ItemMeta meta = item.getItemMeta();
+			for (ScrollType type : ScrollType.values()) {
 				if (item.getType().equals(type.item.getType()) && meta.getDisplayName().equals(type.toString())
 						&& meta.getLore().get(0).contains("×°±¸"))
 					return type;
-			} catch (Exception e) {
 			}
+		} catch (Exception e) {
 		}
 		return null;
+	}
+	
+	public static ItemStack getItem(ScrollType type){
+		switch (type) {
+		case A:
+			return A.getItem();
+		case B:
+			return B.getItem();
+		case C:
+			return C.getItem();
+		case X:
+			return X.getItem();
+		default:
+			return null;
+		}
 	}
 
 }

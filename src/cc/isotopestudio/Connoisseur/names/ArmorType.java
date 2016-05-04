@@ -4,27 +4,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import cc.isotopestudio.Connoisseur.utli.MathUtli;
+import cc.isotopestudio.Connoisseur.utli.S;
 
-public enum ArmorType {
-	LIFE("生命", 1, 2, 3, 4, 7, 9, 15, "增加护甲生命值"),
+public enum ArmorType implements AttributionType {
+	LIFE("生命", 1, 2, 3, 4, 7, 9, 15, false, "生命值"),
 
-	DODGE("闪避", 0.05, 0.8, 0.12, 0.15, 0.19, 0.22, 0.27, "躲避敌人攻击"),
+	DODGE("闪避", 0.05, 0.8, 0.12, 0.15, 0.19, 0.22, 0.27, true, "躲避攻击"),
 
-	RESISTENCE("抵抗", 0.07, 0.10, 0.14, 0.17, 0.22, 0.27, 0.35, "免疫敌人70的攻击"),
+	RESISTENCE("抵抗", 0.07, 0.10, 0.14, 0.17, 0.22, 0.27, 0.35, true, "免疫 70% 的攻击"),
 
-	INVINCIBILITY("无敌", 0.05, 0.8, 0.12, 0.15, 0.19, 0.22, 0.27, "出现3秒无如何伤害来源的效果"),
+	INVINCIBILITY("无敌", 0.05, 0.8, 0.12, 0.15, 0.19, 0.22, 0.27, true, "3秒无敌"),
 
-	BOUNCE("反甲", 1, 2, 3, 4, 7, 9, 12, "有35反弹之后的伤害"),
+	BOUNCE("反甲", 1, 2, 3, 4, 7, 9, 12, false, "35%反弹伤害"),
 
-	SPEED("速度", 0.05, 0.08, 0.12, 0.15, 0.19, 0.22, 0.27, "增加15的速度");
+	SPEED("速度", 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, true, "行走速度");
 
 	final private String name;
 	final private HashMap<LevelType, Double> attriLevMap;
 	final private String description;
+	final private boolean isPercentile;
 
-	ArmorType(String name, double G, double F, double E, double D, double C, double B, double A, String des) {
+	ArmorType(String name, double G, double F, double E, double D, double C, double B, double A, boolean isPercentile,
+			String des) {
 		this.name = name;
 		attriLevMap = new HashMap<LevelType, Double>();
 		attriLevMap.put(LevelType.A, A);
@@ -35,18 +39,23 @@ public enum ArmorType {
 		attriLevMap.put(LevelType.F, F);
 		attriLevMap.put(LevelType.G, G);
 		this.description = des;
+		this.isPercentile = isPercentile;
 	}
 
 	public String toString() {
-		return name;
+		return S.toBoldGold(name);
 	}
 
 	public String getDescription() {
-		return description;
+		return S.toGreen(description);
 	}
 
 	public double getAttri(LevelType type) {
 		return attriLevMap.get(type);
+	}
+
+	public boolean isPercentile() {
+		return isPercentile;
 	}
 
 	public static boolean isArmor(Material item) {
@@ -69,7 +78,7 @@ public enum ArmorType {
 		return ArmorType.values()[num];
 	}
 
-	public static ArrayList<ArmorType> getType(LevelType lvType) {
+	public static ArrayList<ArmorType> genType(LevelType lvType) {
 		ArrayList<ArmorType> list = new ArrayList<ArmorType>();
 		int num = MathUtli.random(1, lvType.getMaxAttrNum());
 		int count = 0;
@@ -85,6 +94,18 @@ public enum ArmorType {
 				list.add(type);
 				count++;
 			}
+		}
+		return list;
+	}
+
+	public static ArrayList<ArmorType> getType(ItemStack item) {
+		ArrayList<ArmorType> list = new ArrayList<ArmorType>();
+		try {
+			for (String lore : item.getItemMeta().getLore())
+				for (ArmorType type : values())
+					if (lore.contains(type.toString()))
+						list.add(type);
+		} catch (Exception e) {
 		}
 		return list;
 	}

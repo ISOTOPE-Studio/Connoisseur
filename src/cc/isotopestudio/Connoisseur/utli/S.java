@@ -29,25 +29,40 @@ public class S {
 	public static String toGold(String s) {
 		return new StringBuilder().append(ChatColor.GOLD).append(s).append(ChatColor.RESET).toString();
 	}
-	
+
 	public static String toBoldGreen(String s) {
-		return new StringBuilder().append(ChatColor.GREEN).append(ChatColor.BOLD).append(s).append(ChatColor.RESET).toString();
+		return new StringBuilder().append(ChatColor.GREEN).append(ChatColor.BOLD).append(s).append(ChatColor.RESET)
+				.toString();
 	}
 
 	public static String toBoldDarkGreen(String s) {
-		return new StringBuilder().append(ChatColor.DARK_GREEN).append(ChatColor.BOLD).append(s).append(ChatColor.RESET).toString();
+		return new StringBuilder().append(ChatColor.DARK_GREEN).append(ChatColor.BOLD).append(s).append(ChatColor.RESET)
+				.toString();
+	}
+	
+	public static String toBoldBlue(String s) {
+		return new StringBuilder().append(ChatColor.BLUE).append(ChatColor.BOLD).append(s).append(ChatColor.RESET)
+				.toString();
 	}
 
 	public static String toBoldDarkAqua(String s) {
-		return new StringBuilder().append(ChatColor.DARK_AQUA).append(ChatColor.BOLD).append(s).append(ChatColor.RESET).toString();
+		return new StringBuilder().append(ChatColor.DARK_AQUA).append(ChatColor.BOLD).append(s).append(ChatColor.RESET)
+				.toString();
 	}
 
 	public static String toBoldPurple(String s) {
-		return new StringBuilder().append(ChatColor.LIGHT_PURPLE).append(ChatColor.BOLD).append(s).append(ChatColor.RESET).toString();
+		return new StringBuilder().append(ChatColor.LIGHT_PURPLE).append(ChatColor.BOLD).append(s)
+				.append(ChatColor.RESET).toString();
 	}
 
 	public static String toBoldGold(String s) {
-		return new StringBuilder().append(ChatColor.GOLD).append(ChatColor.BOLD).append(s).append(ChatColor.RESET).toString();
+		return new StringBuilder().append(ChatColor.GOLD).append(ChatColor.BOLD).append(s).append(ChatColor.RESET)
+				.toString();
+	}
+
+	public static String toBoldRed(String s) {
+		return new StringBuilder().append(ChatColor.GOLD).append(ChatColor.RED).append(s).append(ChatColor.RESET)
+				.toString();
 	}
 
 	public static String toPrefixRed(String s) {
@@ -55,10 +70,12 @@ public class S {
 	}
 
 	public static String toPrefixGreen(String s) {
-		return new StringBuilder(Connoisseur.prefix).append(ChatColor.GREEN).append(s).append(ChatColor.RESET).toString();
+		return new StringBuilder(Connoisseur.prefix).append(ChatColor.GREEN).append(s).append(ChatColor.RESET)
+				.toString();
 	}
 
 	public static String toPrefixYellow(String s) {
-		return new StringBuilder(Connoisseur.prefix).append(ChatColor.YELLOW).append(s).append(ChatColor.RESET).toString();
+		return new StringBuilder(Connoisseur.prefix).append(ChatColor.YELLOW).append(s).append(ChatColor.RESET)
+				.toString();
 	}
 }
