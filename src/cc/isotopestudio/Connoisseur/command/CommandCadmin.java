@@ -5,16 +5,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import cc.isotopestudio.Connoisseur.Connoisseur;
 import cc.isotopestudio.Connoisseur.names.ScrollType;
 import cc.isotopestudio.Connoisseur.utli.S;
 
 public class CommandCadmin implements CommandExecutor {
-	private final Connoisseur plugin;
-
-	public CommandCadmin(Connoisseur plugin) {
-		this.plugin = plugin;
-	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

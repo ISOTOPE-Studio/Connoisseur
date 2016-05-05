@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import cc.isotopestudio.Connoisseur.config.C;
+import cc.isotopestudio.Connoisseur.obj.WeaponConnoObj;
 import cc.isotopestudio.Connoisseur.utli.MathUtli;
 import cc.isotopestudio.Connoisseur.utli.S;
 
@@ -80,7 +81,6 @@ public enum WeaponType {
 			loop: {
 				WeaponType type = getRandom();
 				for (WeaponType temp : list) {
-					System.out.println(temp + " " + type + " " + temp.equals(type));
 					if (temp.equals(type)) {
 						break loop;
 					}
@@ -126,10 +126,6 @@ public enum WeaponType {
 		}
 		if (lvType == null || attriList.size() == 0)
 			return null;
-		System.out.println(lvType.toString());
-		for (WeaponType type : attriList) {
-			System.out.println(type.toString() + ": " + parameters.get(type));
-		}
 		return new WeaponConnoObj(lvType, attriList, parameters);
 	}
 

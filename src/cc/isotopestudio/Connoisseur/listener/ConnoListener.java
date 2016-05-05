@@ -11,12 +11,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import cc.isotopestudio.Connoisseur.names.ArmorConnoObj;
 import cc.isotopestudio.Connoisseur.names.ArmorType;
-import cc.isotopestudio.Connoisseur.names.LevelType;
 import cc.isotopestudio.Connoisseur.names.ScrollType;
-import cc.isotopestudio.Connoisseur.names.WeaponConnoObj;
 import cc.isotopestudio.Connoisseur.names.WeaponType;
+import cc.isotopestudio.Connoisseur.obj.*;
 import cc.isotopestudio.Connoisseur.utli.S;
 
 public class ConnoListener implements Listener {
@@ -39,7 +37,10 @@ public class ConnoListener implements Listener {
 				return;
 			}
 			progress.put(playerName, stype);
-			player.sendMessage(S.toPrefixYellow("现在请右键要鉴定的装备"));
+			if (stype == ScrollType.X)
+				player.sendMessage(S.toPrefixYellow("现在请右键要清洗的装备(不可撤回)"));
+			else
+				player.sendMessage(S.toPrefixYellow("现在请右键要鉴定的装备"));
 		} else {
 			// continue on gear
 			ItemStack gear = event.getItem();

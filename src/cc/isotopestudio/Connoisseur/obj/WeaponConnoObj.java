@@ -1,8 +1,11 @@
-package cc.isotopestudio.Connoisseur.names;
+package cc.isotopestudio.Connoisseur.obj;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cc.isotopestudio.Connoisseur.names.LevelType;
+import cc.isotopestudio.Connoisseur.names.ScrollType;
+import cc.isotopestudio.Connoisseur.names.WeaponType;
 import cc.isotopestudio.Connoisseur.utli.MathUtli;
 import cc.isotopestudio.Connoisseur.utli.S;
 

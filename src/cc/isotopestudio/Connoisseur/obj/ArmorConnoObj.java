@@ -1,8 +1,11 @@
-package cc.isotopestudio.Connoisseur.names;
+package cc.isotopestudio.Connoisseur.obj;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cc.isotopestudio.Connoisseur.names.ArmorType;
+import cc.isotopestudio.Connoisseur.names.LevelType;
+import cc.isotopestudio.Connoisseur.names.ScrollType;
 import cc.isotopestudio.Connoisseur.utli.MathUtli;
 import cc.isotopestudio.Connoisseur.utli.S;
 
@@ -31,6 +34,18 @@ public class ArmorConnoObj {
 		this.attriList = attriList;
 		this.parameters = parameters;
 		this.playerName = "";
+	}
+
+	public String toString() {
+		StringBuilder s = new StringBuilder("Level: " + lvType.toString() + ", Attribution: [");
+		for (ArmorType aType : attriList) {
+			if (aType.isPercentile())
+				s.append(aType.toString() + ": " + Math.round(parameters.get(aType) * 100) + "%");
+			else
+				s.append(aType.toString() + ": " + Math.round(parameters.get(aType)));
+			s.append(" , ");
+		}
+		return s.append("]").toString();
 	}
 
 	public LevelType getLevelType() {
@@ -64,5 +79,16 @@ public class ArmorConnoObj {
 		lore.add(S.toItalicYellow("ÎÞÏÞÄÍ¾Ã"));
 		lore.add(header);
 		return lore;
+	}
+
+	public void addAll(ArmorConnoObj ano) {
+		for (ArmorType aType : ano.getAttriList()) {
+			if (this.getAttriList().contains(aType)) {
+				this.getParameters().put(aType, this.getParameters().get(aType) + ano.getParameters().get(aType));
+			} else {
+				this.getAttriList().add(aType);
+				this.getParameters().put(aType, ano.getParameters().get(aType));
+			}
+		}
 	}
 }

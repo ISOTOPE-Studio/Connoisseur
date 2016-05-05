@@ -10,8 +10,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import cc.isotopestudio.Connoisseur.names.WeaponConnoObj;
 import cc.isotopestudio.Connoisseur.names.WeaponType;
+import cc.isotopestudio.Connoisseur.obj.WeaponConnoObj;
 import cc.isotopestudio.Connoisseur.utli.S;
 
 public class WeaponListener implements Listener {
@@ -26,14 +26,12 @@ public class WeaponListener implements Listener {
 		}
 		Player player = (Player) event.getDamager();
 		ItemStack item = player.getItemInHand();
-		WeaponConnoObj info = null;
-		info = WeaponType.getType(item);
+		WeaponConnoObj info = WeaponType.getType(item);
 		if (info == null)
 			return;
 		LivingEntity damagee = (LivingEntity) event.getEntity();
 		for (WeaponType attri : info.getAttriList()) {
 			if (attri.isPercentile()) {
-				System.out.println(attri.toString() + " " + info.getParameters().get(attri));
 				if (info.getParameters().get(attri) < Math.random())
 					continue;
 			}
@@ -72,7 +70,7 @@ public class WeaponListener implements Listener {
 		}
 	}
 
-	public void onCtitical(EntityDamageByEntityEvent event) {
+	void onCtitical(EntityDamageByEntityEvent event) {
 		System.out.print("--onCtitical--");
 		System.out.print(event.getDamage());
 		event.setDamage(event.getDamage() * 2);
@@ -88,7 +86,7 @@ public class WeaponListener implements Listener {
 		System.out.print("--onAdditional--");
 	}
 
-	public void onDeadly(LivingEntity entity) {
+	void onDeadly(LivingEntity entity) {
 		entity.setHealth(0);
 		System.out.print("--onDeadly--");
 	}

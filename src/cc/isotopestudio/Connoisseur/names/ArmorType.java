@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import cc.isotopestudio.Connoisseur.config.C;
+import cc.isotopestudio.Connoisseur.obj.ArmorConnoObj;
 import cc.isotopestudio.Connoisseur.utli.MathUtli;
 import cc.isotopestudio.Connoisseur.utli.S;
 
@@ -16,7 +17,7 @@ public enum ArmorType {
 
 	DODGE("ÉÁ±Ü", 0.05, 0.8, 0.12, 0.15, 0.19, 0.22, 0.27, true, "¶ã±Ü¹¥»÷"),
 
-	RESISTENCE("µÖ¿¹", 0.07, 0.10, 0.14, 0.17, 0.22, 0.27, 0.35, true, "ÃâÒß 70% µÄ¹¥»÷"),
+	RESISTANCE("µÖ¿¹", 0.07, 0.10, 0.14, 0.17, 0.22, 0.27, 0.35, true, "ÃâÒß 70% µÄ¹¥»÷"),
 
 	INVINCIBILITY("ÎÞµÐ", 0.05, 0.8, 0.12, 0.15, 0.19, 0.22, 0.27, true, "3ÃëÎÞµÐ"),
 
@@ -80,7 +81,6 @@ public enum ArmorType {
 			loop: {
 				ArmorType type = getRandom();
 				for (ArmorType temp : list) {
-					System.out.println(temp + " " + type + " " + temp.equals(type));
 					if (temp.equals(type)) {
 						break loop;
 					}
@@ -126,10 +126,6 @@ public enum ArmorType {
 		}
 		if (lvType == null || attriList.size() == 0)
 			return null;
-		System.out.println(lvType.toString());
-		for (ArmorType type : attriList) {
-			System.out.println(type.toString() + ": " + parameters.get(type));
-		}
 		return new ArmorConnoObj(lvType, attriList, parameters);
 	}
 

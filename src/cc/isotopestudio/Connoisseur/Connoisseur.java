@@ -7,7 +7,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import cc.isotopestudio.Connoisseur.command.CommandCadmin;
-import cc.isotopestudio.Connoisseur.command.CommandConno;
 import cc.isotopestudio.Connoisseur.config.C;
 import cc.isotopestudio.Connoisseur.listener.ArmorListener;
 import cc.isotopestudio.Connoisseur.listener.ConnoListener;
@@ -32,10 +31,10 @@ public class Connoisseur extends JavaPlugin {
 		C.update(this);
 		PluginManager pm = this.getServer().getPluginManager();
 		pm.registerEvents(new ConnoListener(), this);
-		pm.registerEvents(new WeaponListener(),this);
-		pm.registerEvents(new ArmorListener(),this);
-		this.getCommand("Connoisseur").setExecutor(new CommandConno(this));
-		this.getCommand("ConnoisseurAdmin").setExecutor(new CommandCadmin(this));
+		pm.registerEvents(new WeaponListener(), this);
+		pm.registerEvents(new ArmorListener(), this);
+		// this.getCommand("Connoisseur").setExecutor(new CommandConno());
+		this.getCommand("ConnoisseurAdmin").setExecutor(new CommandCadmin());
 
 		getLogger().info(pluginName + "成功加载!");
 		getLogger().info(pluginName + "由ISOTOPE Studio制作!");
