@@ -1,10 +1,14 @@
 package cc.isotopestudio.Connoisseur.names;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import cc.isotopestudio.Connoisseur.config.C;
+import cc.isotopestudio.Connoisseur.utli.MathUtli;
 import cc.isotopestudio.Connoisseur.utli.S;
 
 public enum WeaponType {
@@ -41,7 +45,7 @@ public enum WeaponType {
 	}
 
 	public String toString() {
-		return name;
+		return S.toBoldGold(name);
 	}
 
 	public String getDescription() {
@@ -62,4 +66,75 @@ public enum WeaponType {
 				return true;
 		return false;
 	}
+
+	public static WeaponType getRandom() {
+		int num = MathUtli.random(0, WeaponType.values().length - 1);
+		return WeaponType.values()[num];
+	}
+
+	public static ArrayList<WeaponType> genType(LevelType lvType) {
+		ArrayList<WeaponType> list = new ArrayList<WeaponType>();
+		int num = lvType.getAttrNum();
+		int count = 0;
+		while (count < num) {
+			loop: {
+				WeaponType type = getRandom();
+				for (WeaponType temp : list) {
+					System.out.println(temp + " " + type + " " + temp.equals(type));
+					if (temp.equals(type)) {
+						break loop;
+					}
+				}
+				list.add(type);
+				count++;
+			}
+		}
+		return list;
+	}
+
+	public static WeaponConnoObj getType(ItemStack item) {
+		ArrayList<WeaponType> attriList = new ArrayList<WeaponType>();
+		HashMap<WeaponType, Double> parameters = new HashMap<WeaponType, Double>();
+		LevelType lvType = null;
+		try {
+			for (String lore : item.getItemMeta().getLore()) {
+				if (lore.contains("Æ·ÖÊ: ")) {
+					for (LevelType type : LevelType.values()) {
+						if (lore.contains(type.toString())) {
+							lvType = type;
+							continue;
+						}
+					}
+				}
+				for (WeaponType type : values()) {
+					if (lore.contains(type.toString())) {
+						attriList.add(type);
+						lore = ChatColor.stripColor(lore);
+						if (type.isPercentile()) {
+							parameters.put(type,
+									Double.parseDouble(lore.substring(lore.indexOf(": ") + 1, lore.length() - 1))
+											/ 100);
+						} else {
+							parameters.put(type,
+									Double.parseDouble(lore.substring(lore.indexOf(": ") + 1, lore.length())));
+						}
+						continue;
+					}
+				}
+			}
+		} catch (Exception e) {
+		}
+		if (lvType == null || attriList.size() == 0)
+			return null;
+		System.out.println(lvType.toString());
+		for (WeaponType type : attriList) {
+			System.out.println(type.toString() + ": " + parameters.get(type));
+		}
+		return new WeaponConnoObj(lvType, attriList, parameters);
+	}
+
+	public boolean equals(WeaponType another) {
+		return this.name.equals(another.name);
+	}
+
 }

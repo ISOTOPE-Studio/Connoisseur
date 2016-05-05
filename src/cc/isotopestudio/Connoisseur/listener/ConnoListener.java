@@ -15,6 +15,7 @@ import cc.isotopestudio.Connoisseur.names.ArmorConnoObj;
 import cc.isotopestudio.Connoisseur.names.ArmorType;
 import cc.isotopestudio.Connoisseur.names.LevelType;
 import cc.isotopestudio.Connoisseur.names.ScrollType;
+import cc.isotopestudio.Connoisseur.names.WeaponConnoObj;
 import cc.isotopestudio.Connoisseur.names.WeaponType;
 import cc.isotopestudio.Connoisseur.utli.S;
 
@@ -53,11 +54,11 @@ public class ConnoListener implements Listener {
 				player.sendMessage(S.toPrefixRed("鉴定失败(这不是有效物品)"));
 				return;
 			}
-			if (ArmorType.getType(gear) != null) {
-				player.sendMessage(S.toPrefixRed("鉴定失败(已经鉴定的物品)"));
-				return;
-			}
 			if (ArmorType.isArmor(gear.getType())) {
+				if (ArmorType.getType(gear) != null) {
+					player.sendMessage(S.toPrefixRed("鉴定失败(已经鉴定的物品)"));
+					return;
+				}
 				ArmorConnoObj result = new ArmorConnoObj(type, player.getName());
 				int pos = player.getInventory().first(ScrollType.getItem(type));
 				player.getInventory().setItem(pos, null);
@@ -67,14 +68,24 @@ public class ConnoListener implements Listener {
 				meta.setLore(lore);
 				gear.setItemMeta(meta);
 				player.setItemInHand(gear);
+				player.sendMessage(S.toPrefixGreen("鉴定成功!"));
 			}
 
 			else if (WeaponType.isWeapon(gear.getType())) {
-				/*
-				 * ArrayList<WeaponType> attriList = WeaponType.getType(lvType);
-				 * player.sendMessage(lvType + ": " + lvType.getMaxAttrNum() +
-				 * attriList.toString());
-				 */
+				if (WeaponType.getType(gear) != null) {
+					player.sendMessage(S.toPrefixRed("鉴定失败(已经鉴定的物品)"));
+					return;
+				}
+				WeaponConnoObj result = new WeaponConnoObj(type, player.getName());
+				int pos = player.getInventory().first(ScrollType.getItem(type));
+				player.getInventory().setItem(pos, null);
+				ItemMeta meta = gear.getItemMeta();
+				List<String> lore = meta.getLore() == null ? new ArrayList<String>() : meta.getLore();
+				lore.addAll(result.getLore());
+				meta.setLore(lore);
+				gear.setItemMeta(meta);
+				player.setItemInHand(gear);
+				player.sendMessage(S.toPrefixGreen("鉴定成功!"));
 			}
 
 			else {
