@@ -19,11 +19,11 @@ public enum LevelType {
 	G("´Ö²Ú", 1);
 	
 	private String name;
-	private int max;
+	private int num;
 
-	LevelType(String name, int max) {
+	LevelType(String name, int num) {
 		this.name = name;
-		this.max = max;
+		this.num = num;
 	}
 
 	public String toString() {
@@ -44,8 +44,8 @@ public enum LevelType {
 		return null;
 	}
 
-	public int getMaxAttrNum() {
-		return max;
+	public int getAttrNum() {
+		return num;
 	}
 
 	public static LevelType getRandom() {

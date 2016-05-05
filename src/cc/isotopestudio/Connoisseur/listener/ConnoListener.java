@@ -26,6 +26,7 @@ public class ConnoListener implements Listener {
 	public void onClickScroll(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		String playerName = player.getName();
+		ArmorType.getType(player.getItemInHand());
 		if (progress.get(playerName) == null) {
 			// click scroll
 			ItemStack scroll = event.getItem();
@@ -48,8 +49,14 @@ public class ConnoListener implements Listener {
 				player.sendMessage(S.toPrefixRed("你没有" + type));
 				return;
 			}
-			if (gear == null)
+			if (gear == null) {
+				player.sendMessage(S.toPrefixRed("鉴定失败(这不是有效物品)"));
 				return;
+			}
+			if (ArmorType.getType(gear) != null) {
+				player.sendMessage(S.toPrefixRed("鉴定失败(已经鉴定的物品)"));
+				return;
+			}
 			if (ArmorType.isArmor(gear.getType())) {
 				ArmorConnoObj result = new ArmorConnoObj(type, player.getName());
 				int pos = player.getInventory().first(ScrollType.getItem(type));

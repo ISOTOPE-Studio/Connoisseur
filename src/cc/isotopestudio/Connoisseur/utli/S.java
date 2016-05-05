@@ -61,7 +61,12 @@ public class S {
 	}
 
 	public static String toBoldRed(String s) {
-		return new StringBuilder().append(ChatColor.GOLD).append(ChatColor.RED).append(s).append(ChatColor.RESET)
+		return new StringBuilder().append(ChatColor.RED).append(ChatColor.BOLD).append(s).append(ChatColor.RESET)
+				.toString();
+	}
+	
+	public static String toItalicYellow(String s) {
+		return new StringBuilder().append(ChatColor.YELLOW).append(ChatColor.ITALIC).append(s).append(ChatColor.RESET)
 				.toString();
 	}
 

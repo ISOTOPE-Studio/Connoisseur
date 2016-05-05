@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import cc.isotopestudio.Connoisseur.command.CommandCadmin;
 import cc.isotopestudio.Connoisseur.command.CommandConno;
+import cc.isotopestudio.Connoisseur.config.C;
 import cc.isotopestudio.Connoisseur.listener.ConnoListener;
 
 public class Connoisseur extends JavaPlugin {
@@ -26,7 +27,7 @@ public class Connoisseur extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		createFile("config");
-
+		C.update(this);
 		PluginManager pm = this.getServer().getPluginManager();
 		pm.registerEvents(new ConnoListener(), this);
 
@@ -45,6 +46,7 @@ public class Connoisseur extends JavaPlugin {
 
 	public void onReload() {
 		this.reloadConfig();
+		C.update(this);
 		getLogger().info(pluginName + "成功重载!");
 		getLogger().info(pluginName + "由ISOTOPE Studio制作!");
 	}

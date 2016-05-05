@@ -28,7 +28,7 @@ public enum ScrollType {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(toString());
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(S.toAqua("使用 /conno use" + this.name() + " 鉴定装备"));
+		lore.add(S.toAqua("右键鉴定卷 再右键装备来使用"));
 		lore.add(S.toGray("最低鉴定等级: ") + min);
 		lore.add(S.toGray("最高鉴定等级: ") + max);
 		meta.setLore(lore);
@@ -43,7 +43,7 @@ public enum ScrollType {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(toString());
 		ArrayList<String> lore = new ArrayList<String>();
-		lore.add(S.toAqua("使用/conno use" + this.name() + "清洗装备"));
+		lore.add(S.toAqua("右键清洗卷 再右键装备来使用"));
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		this.min = LevelType.G;

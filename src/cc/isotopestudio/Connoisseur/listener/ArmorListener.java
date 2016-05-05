@@ -18,10 +18,13 @@ public class ArmorListener implements Listener {
 	}
 
 	public static ArrayList<ArmorType> getArmorAttri(Player player) {
+		
 		ArrayList<ArmorType> list = new ArrayList<ArmorType>();
+		/*
 		for (ItemStack item : player.getInventory().getArmorContents()) {
 			list.addAll(ArmorType.getType(item));
 		}
+		*/
 		return list;
 	}
 

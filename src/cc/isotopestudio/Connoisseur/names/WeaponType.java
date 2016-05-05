@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.bukkit.Material;
 
+import cc.isotopestudio.Connoisseur.config.C;
 import cc.isotopestudio.Connoisseur.utli.S;
 
 public enum WeaponType {
@@ -56,14 +57,9 @@ public enum WeaponType {
 	}
 
 	public static boolean isWeapon(Material item) {
-		if (item.equals(Material.DIAMOND_SWORD) || item.equals(Material.DIAMOND_AXE)
-
-				|| item.equals(Material.GOLD_SWORD) || item.equals(Material.GOLD_AXE)
-
-				|| item.equals(Material.IRON_SWORD) || item.equals(Material.IRON_AXE)
-
-				|| item.equals(Material.WOOD_SWORD) || item.equals(Material.WOOD_AXE))
-			return true;
+		for (Material m : C.weapons)
+			if (item == m)
+				return true;
 		return false;
 	}
 }

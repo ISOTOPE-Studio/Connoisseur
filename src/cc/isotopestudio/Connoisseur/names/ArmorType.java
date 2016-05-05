@@ -3,13 +3,15 @@ package cc.isotopestudio.Connoisseur.names;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import cc.isotopestudio.Connoisseur.config.C;
 import cc.isotopestudio.Connoisseur.utli.MathUtli;
 import cc.isotopestudio.Connoisseur.utli.S;
 
-public enum ArmorType implements AttributionType {
+public enum ArmorType {
 	LIFE("生命", 1, 2, 3, 4, 7, 9, 15, false, "生命值"),
 
 	DODGE("闪避", 0.05, 0.8, 0.12, 0.15, 0.19, 0.22, 0.27, true, "躲避攻击"),
@@ -59,17 +61,9 @@ public enum ArmorType implements AttributionType {
 	}
 
 	public static boolean isArmor(Material item) {
-		if (item.equals(Material.DIAMOND_HELMET) || item.equals(Material.DIAMOND_CHESTPLATE)
-				|| item.equals(Material.DIAMOND_LEGGINGS) || item.equals(Material.DIAMOND_BOOTS)
-				|| item.equals(Material.GOLD_HELMET) || item.equals(Material.GOLD_CHESTPLATE)
-				|| item.equals(Material.GOLD_LEGGINGS) || item.equals(Material.GOLD_BOOTS)
-				|| item.equals(Material.IRON_HELMET) || item.equals(Material.IRON_CHESTPLATE)
-				|| item.equals(Material.IRON_LEGGINGS) || item.equals(Material.IRON_BOOTS)
-				|| item.equals(Material.LEATHER_HELMET) || item.equals(Material.LEATHER_CHESTPLATE)
-				|| item.equals(Material.LEATHER_LEGGINGS) || item.equals(Material.LEATHER_BOOTS)
-				|| item.equals(Material.CHAINMAIL_HELMET) || item.equals(Material.CHAINMAIL_CHESTPLATE)
-				|| item.equals(Material.CHAINMAIL_LEGGINGS) || item.equals(Material.CHAINMAIL_BOOTS))
-			return true;
+		for (Material m : C.armors)
+			if (item == m)
+				return true;
 		return false;
 	}
 
@@ -80,7 +74,7 @@ public enum ArmorType implements AttributionType {
 
 	public static ArrayList<ArmorType> genType(LevelType lvType) {
 		ArrayList<ArmorType> list = new ArrayList<ArmorType>();
-		int num = MathUtli.random(1, lvType.getMaxAttrNum());
+		int num = lvType.getAttrNum();
 		int count = 0;
 		while (count < num) {
 			loop: {
@@ -98,16 +92,45 @@ public enum ArmorType implements AttributionType {
 		return list;
 	}
 
-	public static ArrayList<ArmorType> getType(ItemStack item) {
-		ArrayList<ArmorType> list = new ArrayList<ArmorType>();
+	public static ArmorConnoObj getType(ItemStack item) {
+		ArrayList<ArmorType> attriList = new ArrayList<ArmorType>();
+		HashMap<ArmorType, Double> parameters = new HashMap<ArmorType, Double>();
+		LevelType lvType = null;
 		try {
-			for (String lore : item.getItemMeta().getLore())
-				for (ArmorType type : values())
-					if (lore.contains(type.toString()))
-						list.add(type);
+			for (String lore : item.getItemMeta().getLore()) {
+				if (lore.contains("品质: ")) {
+					for (LevelType type : LevelType.values()) {
+						if (lore.contains(type.toString())) {
+							lvType = type;
+							continue;
+						}
+					}
+				}
+				for (ArmorType type : values()) {
+					if (lore.contains(type.toString())) {
+						attriList.add(type);
+						lore = ChatColor.stripColor(lore);
+						if (type.isPercentile()) {
+							parameters.put(type,
+									Double.parseDouble(lore.substring(lore.indexOf(": ") + 1, lore.length() - 1))
+											/ 100);
+						} else {
+							parameters.put(type,
+									Double.parseDouble(lore.substring(lore.indexOf(": ") + 1, lore.length())));
+						}
+						continue;
+					}
+				}
+			}
 		} catch (Exception e) {
 		}
-		return list;
+		if (lvType == null || attriList.size() == 0)
+			return null;
+		System.out.println(lvType.toString());
+		for (ArmorType type : attriList) {
+			System.out.println(type.toString() + ": " + parameters.get(type));
+		}
+		return new ArmorConnoObj(lvType, attriList, parameters);
 	}
 
 	public boolean equals(ArmorType another) {
