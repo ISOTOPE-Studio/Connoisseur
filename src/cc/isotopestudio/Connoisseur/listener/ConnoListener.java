@@ -33,7 +33,7 @@ public class ConnoListener implements Listener {
 			if (stype == null)
 				return;
 			if (scroll.getAmount() != 1) {
-				player.sendMessage(S.toPrefixRed("请只拿着一个鉴定卷"));
+				player.sendMessage(S.toPrefixRed("请只拿着一个鉴定/清洗卷"));
 				return;
 			}
 			progress.put(playerName, stype);
@@ -55,7 +55,34 @@ public class ConnoListener implements Listener {
 				player.sendMessage(S.toPrefixRed("鉴定失败(这不是有效物品)"));
 				return;
 			}
-			if (ArmorType.isArmor(gear.getType())) {
+			if (type == ScrollType.X) {
+				if (ArmorType.isArmor(gear.getType()) || WeaponType.isWeapon(gear.getType())) {
+					if (ArmorType.getType(gear) != null || WeaponType.getType(gear) != null) {
+						int start = -1, end = -1;
+						ItemMeta meta = gear.getItemMeta();
+						List<String> list = meta.getLore();
+						for (int i = 0; i < list.size(); i++) {
+							if (start == -1 && list.get(i).equals(ArmorConnoObj.header)) {
+								start = i;
+							} else if (list.get(i).equals(ArmorConnoObj.header)) {
+								end = i;
+							}
+						}
+						for (int i = start; i <= end; i++) {
+							list.remove(start);
+						}
+						meta.setLore(list);
+						gear.setItemMeta(meta);
+						player.setItemInHand(gear);
+						int pos = player.getInventory().first(ScrollType.getItem(type));
+						player.getInventory().setItem(pos, null);
+						player.sendMessage(S.toPrefixGreen("清洗成功!"));
+						return;
+					}
+				}
+				player.sendMessage(S.toPrefixRed("清洗失败(这不是有效物品)"));
+				return;
+			} else if (ArmorType.isArmor(gear.getType())) {
 				if (ArmorType.getType(gear) != null) {
 					player.sendMessage(S.toPrefixRed("鉴定失败(已经鉴定的物品)"));
 					return;

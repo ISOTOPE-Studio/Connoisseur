@@ -112,10 +112,10 @@ public class WeaponListener implements Listener {
 		if (eHealth < 0)
 			eHealth = 0;
 		entity.setHealth(eHealth);
-		double pHealth = entity.getHealth() + 2;
+		double pHealth = player.getHealth() + 2;
 		if (pHealth > player.getMaxHealth())
 			pHealth = player.getMaxHealth();
-		entity.setHealth(pHealth);
+		player.setHealth(pHealth);
 		System.out.print("--onVampiric--");
 	}
 

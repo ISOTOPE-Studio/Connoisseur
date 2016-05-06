@@ -7,7 +7,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import cc.isotopestudio.Connoisseur.names.ArmorType;
 import cc.isotopestudio.Connoisseur.obj.ArmorConnoObj;
@@ -15,11 +18,57 @@ import cc.isotopestudio.Connoisseur.utli.S;
 
 public class ArmorListener implements Listener {
 
+	private final Plugin plugin;
+
+	public ArmorListener(Plugin plugin) {
+		this.plugin = plugin;
+	}
+
 	@EventHandler
-	public void onEquip(InventoryClickEvent event) {
+	public void onEquipEvent(PlayerInteractEvent event) {
+		if (!(event.getPlayer() instanceof Player))
+			return;
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				onEquip(event.getPlayer());
+			}
+		}.runTaskLater(this.plugin, 1);
+
+	}
+
+	@EventHandler
+	public void onEquipEvent(InventoryClickEvent event) {
 		if (!(event.getWhoClicked() instanceof Player))
 			return;
 		Player player = (Player) event.getWhoClicked();
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				onEquip(player);
+			}
+		}.runTaskLater(this.plugin, 1);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				onEquip(player);
+			}
+		}.runTaskLater(this.plugin, 20);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				onEquip(player);
+			}
+		}.runTaskLater(this.plugin, 20 * 5);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				onEquip(player);
+			}
+		}.runTaskLater(this.plugin, 20 * 10);
+	}
+
+	private void onEquip(Player player) {
 		ArmorConnoObj info = getArmorAttri(player);
 		if (info == null)
 			return;
@@ -73,8 +122,10 @@ public class ArmorListener implements Listener {
 			}
 			switch (attri) {
 			case BOUNCE: {
-				onBounce(event, damagee);
-				player.sendMessage(S.toPrefixGreen("∑¥µØ…À∫¶!"));
+				if (Math.random() <= 0.36) {
+					onBounce(damagee, info.getParameters().get(attri));
+					player.sendMessage(S.toPrefixGreen("∑¥µØ…À∫¶!"));
+				}
 				break;
 			}
 			case DODGE: {
@@ -137,9 +188,8 @@ public class ArmorListener implements Listener {
 		System.out.print("--onInvincibility--");
 	}
 
-	void onBounce(EntityDamageByEntityEvent event, LivingEntity entity) {
-		double damage = event.getDamage();
-		event.setDamage(damage);
+	void onBounce(LivingEntity entity, double damage) {
+		entity.damage(damage);
 		System.out.print("--onBounce--");
 	}
 
@@ -149,15 +199,29 @@ public class ArmorListener implements Listener {
 	}
 
 	void setHealth(Player player, double add) {
-		player.setMaxHealth(player.getMaxHealth() + add);
+		double percent = player.getHealth() / player.getMaxHealth();
+		player.setMaxHealth(20 + add);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				player.setHealth(player.getMaxHealth() * percent);
+			}
+		}.runTaskLater(this.plugin, 1);
+	}
+
+	void removeHealth(Player player) {
+		double percent = player.getHealth() / player.getMaxHealth();
+		player.setMaxHealth(20);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				player.setHealth(20 * percent);
+			}
+		}.runTaskLater(this.plugin, 1);
 	}
 
 	void removeSpeed(Player player) {
 		player.setWalkSpeed(0.2f);
-	}
-
-	void removeHealth(Player player) {
-		player.setMaxHealth(20);
 	}
 
 	private float getMoveSpeed(float userSpeed) {
