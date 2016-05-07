@@ -1,5 +1,7 @@
 package cc.isotopestudio.Connoisseur.listener;
 
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Fireball;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -107,14 +109,28 @@ public class ArmorListener implements Listener {
 		if (!(event.getEntity() instanceof Player)) {
 			return;
 		}
-		if (!(event.getDamager() instanceof LivingEntity)) {
-			return;
-		}
 		Player player = (Player) event.getEntity();
+
+		player.sendMessage(getArmorAttri(player).toString());
 		ArmorConnoObj info = getArmorAttri(player);
 		if (info == null)
 			return;
-		LivingEntity damagee = (LivingEntity) event.getEntity();
+		LivingEntity damagee;
+		if (event.getDamager() instanceof Arrow) {
+			if (((Arrow) event.getDamager()).getShooter() instanceof LivingEntity)
+				damagee = (LivingEntity) ((Arrow) event.getDamager()).getShooter();
+			else
+				return;
+		} else if (event.getDamager() instanceof Fireball) {
+			if (((Fireball) event.getDamager()).getShooter() instanceof LivingEntity)
+				damagee = (LivingEntity) ((Fireball) event.getDamager()).getShooter();
+			else
+				return;
+		} else if (event.getDamager() instanceof LivingEntity) {
+			damagee = (LivingEntity) event.getDamager();
+		} else {
+			return;
+		}
 		for (ArmorType attri : info.getAttriList()) {
 			if (attri.isPercentile()) {
 				if (info.getParameters().get(attri) < Math.random())
@@ -122,7 +138,7 @@ public class ArmorListener implements Listener {
 			}
 			switch (attri) {
 			case BOUNCE: {
-				if (Math.random() <= 0.36) {
+				if (Math.random() <= 0.20) {
 					onBounce(damagee, info.getParameters().get(attri));
 					player.sendMessage(S.toPrefixGreen("·´µ¯ÉËº¦!"));
 				}
@@ -153,10 +169,9 @@ public class ArmorListener implements Listener {
 				break;
 			}
 		}
-		player.sendMessage(getArmorAttri(player).toString());
 	}
 
-	public static ArmorConnoObj getArmorAttri(Player player) {
+	static ArmorConnoObj getArmorAttri(Player player) {
 		ArmorConnoObj result = null;
 		boolean first = true;
 		for (ItemStack item : player.getInventory().getArmorContents()) {

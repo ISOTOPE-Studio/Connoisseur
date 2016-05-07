@@ -13,18 +13,18 @@ import cc.isotopestudio.Connoisseur.utli.MathUtli;
 import cc.isotopestudio.Connoisseur.utli.S;
 
 public enum WeaponType {
-	CRITICAL("暴击", 0.08, 0.12, 0.15, 0.17, 0.22, 0.25, 0.30, true, "双倍攻击"),
-
+	CRITICAL("暴击", 0.05, 0.08, 0.10, 0.12, 0.15, 0.17, 0.20, true, "双倍攻击"),
+	
 	VAMPIRIC("吸血", 0.05, 0.08, 0.12, 0.15, 0.20, 0.25, 0.30, true, "吸 2 点生命"),
 
 	ADDITIONAL("附加攻击", 3, 5, 7, 9, 13, 17, 20, false, "增加攻击"),
 
-	DIRECT("直接伤害", 1, 3, 5, 7, 9, 11, 15, false, "直接伤害"),
+	DIRECT("直接伤害", 1, 2, 3, 4, 6, 8, 10, false, "直接伤害"),
 
 	DEADLY("致命一击", 0.002, 0.005, 0.007, 0.009, 0.015, 0.02, 0.03, true, "秒杀对手"),
 
-	FROZEN("重击", 0.08, 0.12, 0.15, 0.17, 0.22, 0.25, 0.30, true, "禁锢 3 秒");
-
+	FROZEN("重击", 0.03, 0.05, 0.08, 0.10, 0.12, 0.15, 0.17, true, "禁锢 3 秒");
+	
 	final private String name;
 	final private HashMap<LevelType, Double> attriLevMap;
 	final private String description;

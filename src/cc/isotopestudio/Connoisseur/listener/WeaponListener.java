@@ -46,7 +46,7 @@ public class WeaponListener implements Listener {
 				break;
 			}
 			case DEADLY: {
-				onDeadly(damagee);
+				onDeadly(event);
 				player.sendMessage(S.toPrefixGreen("ÖÂÃüÒ»»÷!"));
 				break;
 			}
@@ -86,8 +86,11 @@ public class WeaponListener implements Listener {
 		System.out.print("--onAdditional--");
 	}
 
-	void onDeadly(LivingEntity entity) {
-		entity.setHealth(0);
+	void onDeadly(EntityDamageByEntityEvent event) {
+		System.out.print("--onDeadly--");
+		System.out.print(event.getDamage());
+		event.setDamage(event.getDamage() * 20);
+		System.out.print(event.getDamage());
 		System.out.print("--onDeadly--");
 	}
 

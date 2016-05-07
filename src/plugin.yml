@@ -6,10 +6,6 @@ description: Connoisseur
 website: http://isotopestudio.cc
 version: 1.0.0
 commands:
-  Connoisseur:
-    description: Connoisseur command
-    usage: /<command> - Get Information
-    aliases: conno
   ConnoisseurAdmin:
     description: Connoisseur Admin command
     usage: /<command> - Get Information
