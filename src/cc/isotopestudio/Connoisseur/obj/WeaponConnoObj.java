@@ -11,29 +11,45 @@ import cc.isotopestudio.Connoisseur.utli.S;
 
 public class WeaponConnoObj {
 
+	final private java.text.DecimalFormat format = new java.text.DecimalFormat("#.00");
+
 	final private LevelType lvType;
 	final private ArrayList<WeaponType> attriList;
 	final private HashMap<WeaponType, Double> parameters;
 	final private String playerName;
 	final public static String header = S.toGray("——————— ") + S.toBoldRed("【传奇大陆装备鉴定】") + S.toGray(" ———————");
+	final private boolean isUnbreakAble;
 
 	public WeaponConnoObj(ScrollType s, String playerName) {
 		lvType = s.getRandomLevelType();
-		attriList = WeaponType.genType(lvType);
+		ArrayList<WeaponType> attriTempList = WeaponType.genType(lvType);
+		attriList = new ArrayList<WeaponType>();
 		parameters = new HashMap<WeaponType, Double>();
 		this.playerName = playerName;
-		for (WeaponType aType : attriList) {
+		int count = 0;
+		if (Math.random() < 0.3) {
+			count++;
+			isUnbreakAble = true;
+		} else
+			isUnbreakAble = false;
+		for (WeaponType aType : attriTempList) {
+			if (count >= lvType.getAttrNum())
+				break;
 			double min = aType.getAttri(s.getMin());
 			double max = aType.getAttri(lvType);
+			attriList.add(aType);
 			parameters.put(aType, MathUtli.random(min, max));
+			count++;
 		}
 	}
 
-	public WeaponConnoObj(LevelType lvType, ArrayList<WeaponType> attriList, HashMap<WeaponType, Double> parameters) {
+	public WeaponConnoObj(LevelType lvType, ArrayList<WeaponType> attriList, HashMap<WeaponType, Double> parameters,
+			boolean isUnbreakAble) {
 		this.lvType = lvType;
 		this.attriList = attriList;
 		this.parameters = parameters;
 		this.playerName = "";
+		this.isUnbreakAble = isUnbreakAble;
 	}
 
 	public LevelType getLevelType() {
@@ -52,6 +68,10 @@ public class WeaponConnoObj {
 		return playerName;
 	}
 
+	public boolean isUnbreakable() {
+		return isUnbreakAble;
+	}
+
 	public ArrayList<String> getLore() {
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add(header);
@@ -59,12 +79,13 @@ public class WeaponConnoObj {
 		for (WeaponType aType : attriList) {
 			if (aType.isPercentile())
 				lore.add(aType.toString() + " " + aType.getDescription() + ": "
-						+ Math.round(parameters.get(aType) * 100) + "%");
+						+ format.format(parameters.get(aType) * 100) + "%");
 			else
 				lore.add(aType.toString() + " " + aType.getDescription() + ": " + Math.round(parameters.get(aType)));
 		}
 		lore.add(S.toGray("鉴定者: ") + S.toBoldBlue(playerName));
-		lore.add(S.toItalicYellow("无限耐久"));
+		if (isUnbreakAble)
+			lore.add(S.toBoldRed("无法破坏"));
 		lore.add(header);
 		return lore;
 	}

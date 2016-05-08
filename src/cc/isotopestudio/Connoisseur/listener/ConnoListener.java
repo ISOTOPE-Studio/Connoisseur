@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import cc.isotopestudio.Connoisseur.names.ArmorType;
+import cc.isotopestudio.Connoisseur.names.LevelType;
 import cc.isotopestudio.Connoisseur.names.ScrollType;
 import cc.isotopestudio.Connoisseur.names.WeaponType;
 import cc.isotopestudio.Connoisseur.obj.*;
@@ -97,6 +99,12 @@ public class ConnoListener implements Listener {
 				gear.setItemMeta(meta);
 				player.setItemInHand(gear);
 				player.sendMessage(S.toPrefixGreen("鉴定成功!"));
+				if (result.getLevelType() == LevelType.A) {
+					Bukkit.broadcastMessage(S.toPrefixYellow("一道冲天的光闪耀全服，"
+							+ player.getName() + "的" + (gear.getItemMeta().hasDisplayName()
+									? gear.getItemMeta().getDisplayName() : "装备" + "是一把远古遗失的")
+							+ LevelType.A.toString()));
+				}
 			}
 
 			else if (WeaponType.isWeapon(gear.getType())) {
@@ -114,6 +122,12 @@ public class ConnoListener implements Listener {
 				gear.setItemMeta(meta);
 				player.setItemInHand(gear);
 				player.sendMessage(S.toPrefixGreen("鉴定成功!"));
+				if (result.getLevelType() == LevelType.A) {
+					Bukkit.broadcastMessage(S.toPrefixYellow("一道冲天的光闪耀全服，"
+							+ player.getName() + "的" + (gear.getItemMeta().hasDisplayName()
+									? gear.getItemMeta().getDisplayName() : "武器" + "是一把远古遗失的")
+							+ LevelType.A.toString()));
+				}
 			}
 
 			else {

@@ -8,9 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import cc.isotopestudio.Connoisseur.command.CommandCadmin;
 import cc.isotopestudio.Connoisseur.config.C;
-import cc.isotopestudio.Connoisseur.listener.ArmorListener;
-import cc.isotopestudio.Connoisseur.listener.ConnoListener;
-import cc.isotopestudio.Connoisseur.listener.WeaponListener;
+import cc.isotopestudio.Connoisseur.listener.*;
 
 public class Connoisseur extends JavaPlugin {
 	public static final String prefix = (new StringBuilder()).append(ChatColor.GOLD).append(ChatColor.BOLD).append("[")
@@ -31,8 +29,9 @@ public class Connoisseur extends JavaPlugin {
 		C.update(this);
 		PluginManager pm = this.getServer().getPluginManager();
 		pm.registerEvents(new ConnoListener(), this);
-		pm.registerEvents(new WeaponListener(), this);
+		pm.registerEvents(new WeaponListener(this), this);
 		pm.registerEvents(new ArmorListener(this), this);
+		pm.registerEvents(new UnbreakableListener(), this);
 		
 		this.getCommand("ConnoisseurAdmin").setExecutor(new CommandCadmin());
 

@@ -40,6 +40,10 @@ public class CommandCadmin implements CommandExecutor {
 					player.getInventory().addItem(ScrollType.X.getItem());
 					return true;
 				}
+				if (args[0].equalsIgnoreCase("reset")) {
+					player.setMaxHealth(20.0);
+					return true;
+				}
 				sendHelp(player, label);
 				return true;
 			} else {

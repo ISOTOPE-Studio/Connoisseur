@@ -13,15 +13,15 @@ import cc.isotopestudio.Connoisseur.utli.MathUtli;
 import cc.isotopestudio.Connoisseur.utli.S;
 
 public enum ArmorType {
-	LIFE("生命", 1, 2, 3, 4, 7, 9, 15, false, "生命值"),
+	//LIFE("生命", 1, 2, 3, 4, 7, 9, 15, false, "生命值"),
 
-	DODGE("闪避", 0.05, 0.08, 0.12, 0.15, 0.19, 0.22, 0.27, true, "躲避攻击"),
+	DODGE("闪避", 0.01, 0.03, 0.05, 0.07, 0.10, 0.12, 0.15, true, "躲避攻击"),
 
-	RESISTANCE("抵抗", 0.07, 0.10, 0.14, 0.17, 0.22, 0.27, 0.35, true, "免疫 70% 的攻击"),
+	RESISTANCE("抵抗", 0.03, 0.05, 0.07, 0.10, 0.12, 0.15, 0.17, true, "免疫 70% 的攻击"),
 
-	INVINCIBILITY("无敌", 0.05, 0.08, 0.12, 0.15, 0.19, 0.22, 0.27, true, "3秒无敌"),
+	INVINCIBILITY("无敌", 0.005, 0.01, 0.03, 0.05, 0.07, 0.10, 0.12, true, "3秒无敌"),
 
-	BOUNCE("反甲", 1, 2, 3, 4, 7, 9, 12, false, "35%反弹伤害"),
+	BOUNCE("反甲", 1, 2, 3, 4, 6, 8, 10, false, "10%反弹伤害"),
 
 	SPEED("速度", 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, true, "行走速度");
 
@@ -96,6 +96,7 @@ public enum ArmorType {
 		ArrayList<ArmorType> attriList = new ArrayList<ArmorType>();
 		HashMap<ArmorType, Double> parameters = new HashMap<ArmorType, Double>();
 		LevelType lvType = null;
+		boolean isUnbreakable = false;
 		try {
 			for (String lore : item.getItemMeta().getLore()) {
 				if (lore.contains("品质: ")) {
@@ -105,6 +106,10 @@ public enum ArmorType {
 							continue;
 						}
 					}
+				}
+				if (lore.contains("无法破坏")) {
+					isUnbreakable = true;
+					continue;
 				}
 				for (ArmorType type : values()) {
 					if (lore.contains(type.toString())) {
@@ -126,7 +131,7 @@ public enum ArmorType {
 		}
 		if (lvType == null || attriList.size() == 0)
 			return null;
-		return new ArmorConnoObj(lvType, attriList, parameters);
+		return new ArmorConnoObj(lvType, attriList, parameters, isUnbreakable);
 	}
 
 	public boolean equals(ArmorType another) {

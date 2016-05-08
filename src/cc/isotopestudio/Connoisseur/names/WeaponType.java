@@ -13,9 +13,9 @@ import cc.isotopestudio.Connoisseur.utli.MathUtli;
 import cc.isotopestudio.Connoisseur.utli.S;
 
 public enum WeaponType {
-	CRITICAL("±©»÷", 0.05, 0.08, 0.10, 0.12, 0.15, 0.17, 0.20, true, "Ë«±¶¹¥»÷"),
-	
-	VAMPIRIC("ÎüÑª", 0.05, 0.08, 0.12, 0.15, 0.20, 0.25, 0.30, true, "Îü 2 µãÉúÃü"),
+	CRITICAL("±©»÷", 0.03, 0.05, 0.07, 0.10, 0.12, 0.15, 0.18, true, "Ë«±¶¹¥»÷"),
+
+	VAMPIRIC("ÎüÑª", 0.03, 0.05, 0.07, 0.10, 0.12, 0.15, 0.18, true, "Îü 2 µãÉúÃü"),
 
 	ADDITIONAL("¸½¼Ó¹¥»÷", 3, 5, 7, 9, 13, 17, 20, false, "Ôö¼Ó¹¥»÷"),
 
@@ -23,8 +23,8 @@ public enum WeaponType {
 
 	DEADLY("ÖÂÃüÒ»»÷", 0.002, 0.005, 0.007, 0.009, 0.015, 0.02, 0.03, true, "ÃëÉ±¶ÔÊÖ"),
 
-	FROZEN("ÖØ»÷", 0.03, 0.05, 0.08, 0.10, 0.12, 0.15, 0.17, true, "½ûïÀ 3 Ãë");
-	
+	FROZEN("ÖØ»÷", 0.01, 0.03, 0.05, 0.07, 0.10, 0.12, 0.15, true, "½ûïÀ 3 Ãë");
+
 	final private String name;
 	final private HashMap<LevelType, Double> attriLevMap;
 	final private String description;
@@ -96,6 +96,7 @@ public enum WeaponType {
 		ArrayList<WeaponType> attriList = new ArrayList<WeaponType>();
 		HashMap<WeaponType, Double> parameters = new HashMap<WeaponType, Double>();
 		LevelType lvType = null;
+		boolean isUnbreakable = false;
 		try {
 			for (String lore : item.getItemMeta().getLore()) {
 				if (lore.contains("Æ·ÖÊ: ")) {
@@ -105,6 +106,10 @@ public enum WeaponType {
 							continue;
 						}
 					}
+				}
+				if (lore.contains("ÎŞ·¨ÆÆ»µ")) {
+					isUnbreakable = true;
+					continue;
 				}
 				for (WeaponType type : values()) {
 					if (lore.contains(type.toString())) {
@@ -126,7 +131,7 @@ public enum WeaponType {
 		}
 		if (lvType == null || attriList.size() == 0)
 			return null;
-		return new WeaponConnoObj(lvType, attriList, parameters);
+		return new WeaponConnoObj(lvType, attriList, parameters, isUnbreakable);
 	}
 
 	public boolean equals(WeaponType another) {
