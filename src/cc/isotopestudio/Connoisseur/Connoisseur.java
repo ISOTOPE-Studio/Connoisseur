@@ -31,7 +31,6 @@ public class Connoisseur extends JavaPlugin {
 		pm.registerEvents(new ConnoListener(), this);
 		pm.registerEvents(new WeaponListener(this), this);
 		pm.registerEvents(new ArmorListener(this), this);
-		pm.registerEvents(new UnbreakableListener(), this);
 		
 		this.getCommand("ConnoisseurAdmin").setExecutor(new CommandCadmin());
 

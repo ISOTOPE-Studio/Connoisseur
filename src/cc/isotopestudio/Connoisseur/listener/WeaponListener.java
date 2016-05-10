@@ -43,6 +43,7 @@ public class WeaponListener implements Listener {
 		if (info == null)
 			return;
 		plugin.getServer().getPluginManager().registerEvents(new ProjectileListener(event.getEntity(), info), plugin);
+		UnbreakableListener.onBreak(player);
 	}
 
 	@EventHandler(priority = EventPriority.HIGH)
@@ -63,6 +64,7 @@ public class WeaponListener implements Listener {
 			return;
 		LivingEntity damagee = (LivingEntity) event.getEntity();
 		onAttri(event, player, info, damagee);
+		UnbreakableListener.onBreak(player);
 	}
 
 	public static void onAttri(EntityDamageByEntityEvent event, Player player, WeaponConnoObj info,

@@ -197,6 +197,7 @@ public class ArmorListener implements Listener {
 				break;
 			}
 		}
+		UnbreakableListener.onBreak(player);
 	}
 
 	public static ArmorConnoObj getArmorAttri(Player player) {

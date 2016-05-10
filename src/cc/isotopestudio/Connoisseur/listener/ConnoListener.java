@@ -100,10 +100,10 @@ public class ConnoListener implements Listener {
 				player.setItemInHand(gear);
 				player.sendMessage(S.toPrefixGreen("鉴定成功!"));
 				if (result.getLevelType() == LevelType.A) {
-					Bukkit.broadcastMessage(S.toPrefixYellow("一道冲天的光闪耀全服，"
-							+ player.getName() + "的" + (gear.getItemMeta().hasDisplayName()
-									? gear.getItemMeta().getDisplayName() : "装备" + "是一把远古遗失的")
-							+ LevelType.A.toString()));
+					Bukkit.broadcastMessage(S.toPrefixYellow("一道冲天的光闪耀全服，" + player.getDisplayName())
+							+ S.toYellow("的" + (gear.getItemMeta().hasDisplayName()
+									? gear.getItemMeta().getDisplayName() : "装备"))
+							+ S.toYellow("是一把远古遗失的" + LevelType.A.toString()));
 				}
 			}
 
@@ -123,10 +123,10 @@ public class ConnoListener implements Listener {
 				player.setItemInHand(gear);
 				player.sendMessage(S.toPrefixGreen("鉴定成功!"));
 				if (result.getLevelType() == LevelType.A) {
-					Bukkit.broadcastMessage(S.toPrefixYellow("一道冲天的光闪耀全服，"
-							+ player.getName() + "的" + (gear.getItemMeta().hasDisplayName()
-									? gear.getItemMeta().getDisplayName() : "武器" + "是一把远古遗失的")
-							+ LevelType.A.toString()));
+					Bukkit.broadcastMessage(S.toPrefixYellow("一道冲天的光闪耀全服，" + player.getDisplayName())
+							+ S.toYellow("的" + (gear.getItemMeta().hasDisplayName()
+									? gear.getItemMeta().getDisplayName() : "武器"))
+							+ S.toYellow("是一把远古遗失的" + LevelType.A.toString()));
 				}
 			}
 
